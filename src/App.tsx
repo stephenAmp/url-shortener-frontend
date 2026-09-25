@@ -2,13 +2,13 @@ import { useState } from "react";
 import "../src/App.css";
 import { createShortUrl } from "./services/url.service";
 import { ApiError, NetworkError } from "./lib/api";
+import { BASE_URL } from "./lib/shared";
 
 export default function App(){
   const [url, setUrl ] = useState("");
   const [errorMessage, setErrorMessage ] = useState<string|null>(null);
-  const [shortUrl, setShortUrl] = useState<null | string>(null)
+  const [shortCode, setShortCode] = useState<null | string>(null)
   
-
   function checkUrl(){
     try {
         const parsedUrl = new URL(url.trim());
@@ -23,15 +23,17 @@ export default function App(){
     }
 
   }
+  const displayUrl = "http://tw.com/" + shortCode
 
 async function submitUrl() {   
   try{
       setErrorMessage(null)
-      setShortUrl(null)
-      
+      setShortCode(null)
+
       checkUrl()
       const response = await createShortUrl(url.trim());
-      setShortUrl(response.short_code);
+      setShortCode(response.short_code);
+    
 
     } catch (error) {
         if(error instanceof ApiError){
@@ -62,8 +64,8 @@ async function submitUrl() {
              onChange={(e)=>setUrl(e.target.value)}
              />
              {errorMessage && <span className="error-message">{errorMessage}</span>}
-            {shortUrl &&<div className="url-box">
-              <span>https://tw.go/{shortUrl}</span>
+            {shortCode &&<div className="url-box">
+              <a target="_blank" rel="noopener noreferrer" className="url-link" href={BASE_URL+"/urls/"+shortCode}>{displayUrl}</a>
             </div>}
             <button className="btn" disabled = {url.trim().length === 0} onClick={submitUrl}>Generate tiny-weeny URL</button>
         </div>

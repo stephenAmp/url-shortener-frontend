@@ -56,6 +56,16 @@ margin: 0
   opacity: 1; /* Ensures custom color renders correctly in Firefox */
 }
 
+.url-box{
+  background-color: #e1dede;
+  padding: 15px;
+}
+
+.url-link{
+  color: black;
+  font-size: 14px;
+  color:#666666
+}
 
 .btn{
   display: inline-flex;
@@ -80,5 +90,4 @@ margin: 0
 .error-message{
   color:red;
   font-size: 12px;
-  
 }
