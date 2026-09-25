@@ -76,3 +76,9 @@ margin: 0
   border: 1px solid trasnparent;
   transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
+
+.error-message{
+  color:red;
+  font-size: 12px;
+  
+}

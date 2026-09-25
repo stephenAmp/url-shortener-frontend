@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "../src/App.css";
 import { createShortUrl } from "./services/url.service";
+import { ApiError, NetworkError } from "./lib/api";
 
 export default function App(){
   const [url, setUrl ] = useState("");
+  const [errorMessage, setErrorMessage ] = useState<string|null>(null);
   const [shortUrl, setShortUrl] = useState<null | string>(null)
   
 
@@ -24,12 +26,25 @@ export default function App(){
 
 async function submitUrl() {   
   try{
+      setErrorMessage(null)
+      setShortUrl(null)
+      
       checkUrl()
       const response = await createShortUrl(url.trim());
       setShortUrl(response.short_code);
 
     } catch (error) {
-        console.error("FAILED TO CREATE SHORT URL:", error);
+        if(error instanceof ApiError){
+          setErrorMessage(error.message)
+          return
+        }
+
+        if(error instanceof NetworkError){
+          setErrorMessage("Unable to connect to the internet try again later.")
+          return
+        }
+
+        setErrorMessage("Something went wrong.")
     }
 }
 
@@ -46,8 +61,9 @@ async function submitUrl() {
              value={url}
              onChange={(e)=>setUrl(e.target.value)}
              />
+             {errorMessage && <span className="error-message">{errorMessage}</span>}
             {shortUrl &&<div className="url-box">
-              <span>{shortUrl}</span>
+              <span>https://tw.go/{shortUrl}</span>
             </div>}
             <button className="btn" disabled = {url.trim().length === 0} onClick={submitUrl}>Generate tiny-weeny URL</button>
         </div>

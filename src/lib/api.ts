@@ -1,22 +1,37 @@
-import type { Problem } from "./problem";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
-export class ApiError extends Error{
-    readonly problem: Problem;
-    readonly retryAfter?: number;
+export type Problem = {
+    code: string;
+    description: string;
+};
 
-    constructor(problem: Problem,  retryAfter?: number){
-        super()
-        this.problem = problem;
-        this.retryAfter = retryAfter
+export type FastApiValidationError = {
+    detail: {
+        type: string;
+        loc: (string | number)[];
+        msg: string;
+        input: unknown;
+    }[];
+};
+
+export class ApiError extends Error {
+    status: number;
+    code?: string;
+
+    constructor(message: string, status: number, code?: string) {
+        super(message);
+
+        this.name = "ApiError";
+        this.status = status;
+        this.code = code;
     }
-}   
+}
 
-export class NetworkError extends Error{
-    constructor(){
-        super("Could not reach TinyWeeny")
-        this.name = "NetworkError"
+export class NetworkError extends Error {
+    constructor() {
+        super("Unable to connect to the server.");
+        this.name = "NetworkError";
     }
 }
 
@@ -34,19 +49,47 @@ export async function send(path: string, options: RequestInit={}):Promise<Respon
     }
 }
 
-async function parse<T>(res: Response):Promise<T>{
-    const text = await res.text()
-    let data;
+async function parse<T>(response: Response): Promise<T> {
+    const text = await response.text();
 
-    try{
-        data = text ? JSON.parse(text) : null
-    }catch{
-        data = null
+    let data = null;
+
+    try {
+        data = text ? JSON.parse(text) : null;
+    } catch {
+        // Response wasn't JSON
     }
-    if(!res.ok){
-        throw new ApiError(data)
+
+    if (!response.ok) {
+
+        // FastAPI validation error
+        if (response.status === 422 && Array.isArray(data?.detail)) {
+            const message =
+                data.detail[0]?.msg ?? "Invalid request";
+
+            throw new ApiError(
+                message,
+                response.status,
+                data.detail[0]?.type
+            );
+        }
+
+      
+        if (data?.description) {
+            throw new ApiError(
+                data.description,
+                response.status,
+                data.code
+            );
+        }
+
+        throw new ApiError(
+            "Something went wrong.",
+            response.status
+        );
     }
-    return data as T
+
+    return data as T;
 }
 
 export const api = {
