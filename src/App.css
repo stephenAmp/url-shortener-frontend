@@ -1,7 +1,8 @@
 .page-container{
   margin: 0 auto;
   box-sizing:border-box;
-  max-width:1200px;
+  margin-top: 100px;
+  max-width:1000px;
   width:90%;
 }
 
@@ -32,7 +33,6 @@
   justify-content: center;
   text-align:center;
   gap:12px;
-  min-height:600px;
 }
 .page-description-box h1,
 .page-description-box span
@@ -66,7 +66,45 @@ margin: 0
   font-size: 14px;
   color:#666666
 }
+.optional-fields-box{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 70px;
+}
 
+.alias-box{
+  display: flex;
+  flex-direction: column;
+  gap:16px;
+}
+
+.alias-input-custom{
+  width:500px;
+  padding:12px 16px;
+  border: 1px solid;
+  border-radius:6px;
+  background-color: #ffffff;
+  border-color:#d1d5db
+
+}
+.alias-input-expiry{
+  border-radius:6px;
+  border: 1px solid;
+  background: #ffffff;
+  border-color: #d1d5db;
+  padding:12px 16px;
+  width: 300px;
+}
+
+.footer-grp{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  gap:70px;
+}
 .btn{
   display: inline-flex;
   align-items: center;
@@ -83,7 +121,7 @@ margin: 0
   color: #ffffff;
   gap:8px;
   border-color: #2563eb;
-  border: 1px solid trasnparent;
+  border: 1px solid transparent;
   transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 

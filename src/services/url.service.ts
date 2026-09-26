@@ -1,6 +1,6 @@
 import { api } from "../lib/api";
-import type { CreateUrlResponse } from "../lib/types/url";
+import type { CreateUrl, CreateUrlResponse } from "../lib/types/url";
 
-export const createShortUrl = (originalUrl: string)=>{
-return api.post<CreateUrlResponse>("/urls",{original_url: originalUrl})
+export const createShortUrl = (payload:CreateUrl)=>{
+return api.post<CreateUrlResponse>("/urls", payload)
 }
