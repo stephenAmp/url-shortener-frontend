@@ -88,8 +88,44 @@
     cursor: pointer;
     line-height: 1.5;
 }
+
+.pagination-box{ 
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.pagination-btn-grp {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+.pagination-btn:hover {
+  background: #f1f3f4;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
 .table{
-    margin-top: 35px;
     border: 1px #ddd;
     border-collapse: collapse;
     width: 100%;

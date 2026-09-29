@@ -1,0 +1,32 @@
+.url-detail-container{
+    margin-top: 30px;
+    padding: 2px 30px;       /* currently only left and top */
+    background: #f7faff;
+    border: 2px solid #b9cbed;
+    border-radius: 8px;
+
+}
+
+.details-grid{
+display: grid;
+grid-template-columns: 1fr 1.5fr 1fr;
+}
+.details-heading-title{
+    font-weight: 600;
+    font-size:25px;
+    color: black;
+}
+
+.details-heading-value{
+    font-weight: 500;
+    font-size: 20px;
+    color: black;
+}
+
+.details-value-row{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;  
+}
+

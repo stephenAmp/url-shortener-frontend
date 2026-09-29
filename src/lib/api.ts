@@ -57,6 +57,7 @@ async function parse<T>(response: Response): Promise<T> {
         data = text ? JSON.parse(text) : null;
     } catch {
         // Response wasn't JSON
+        console.error("API RESPONSE IS NOT JSON")
     }
 
     if (!response.ok) {
@@ -101,6 +102,23 @@ export const api = {
         const response = await send(path, {
             method: "POST",
             body: JSON.stringify(body)
+        })
+        return parse<T>(response)
+    },
+
+    delete: async<T>(path: string): Promise<T> =>{
+        const response = await send(path, {
+            method: "DELETE",
+        })
+        return parse<T>(response)
+    },
+
+    patch: async<T>(path: string, body?: unknown): Promise<T> =>{
+        const response = await send(path, {
+            method: "PATCH",
+            ...(body !== undefined && {
+                body: JSON.stringify(body)
+            })
         })
         return parse<T>(response)
     }
