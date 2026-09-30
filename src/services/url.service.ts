@@ -6,8 +6,8 @@ export const createShortUrl = (payload:CreateUrl)=>{
 return api.post<CreateUrlResponse>(ApiEndpoints.createShortUrl, payload)
 }
 
-export const getAllUrls = (page: number, limit: number)=>{
-    return api.get<GetUrlResponse>(ApiEndpoints.getAllUrls(page, limit))
+export const getAllUrls = (page?: number, limit?: number, q?:string, status?: string, createdFrom?: string, createdBefore?: string)=>{
+    return api.get<GetUrlResponse>(ApiEndpoints.getAllUrls(page, limit, q, status,createdFrom, createdBefore))
 }
 
 export const getRedirectUrl = (shortCode:string)=>{

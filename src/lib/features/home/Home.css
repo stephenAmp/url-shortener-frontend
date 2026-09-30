@@ -125,6 +125,16 @@
   cursor: default;
 }
 
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .table{
     border: 1px #ddd;
     border-collapse: collapse;

@@ -109,7 +109,7 @@ async function submitUrl() {
                   <h3 className="optional-heading">Expires</h3>
                     <div>
                       <input
-                        type="date"
+                        type="datetime-local"
                         className="alias-input-expiry"
                         value={expiresAt}
                         min={minDate}

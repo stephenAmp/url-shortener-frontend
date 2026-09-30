@@ -24,7 +24,7 @@ export interface Url {
   "expires_at":  null | string,
   "short_code": string,
   "original_url": string,
-  "isActive": null | string
+  "isActive": null | boolean
 }
 
 export interface GetUrlResponse {
